@@ -62,6 +62,7 @@ store.dispatch({
   type: "ADD",
   payload: 30000
 });
+
 store.dispatch({
   type: "SUBTRACT",
   payload: 5
