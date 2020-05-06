@@ -16,7 +16,7 @@
 // Learn more about service workers: https://bit.ly/CRA-PWA
 // serviceWorker.unregister();
 
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 
 const initialState = {
   result: 15000,
@@ -62,10 +62,14 @@ const employeeReducer = (state = initialState, action) => {
   return state;
 }
 
-const store = createStore(combineReducers({employeeReducer, userReducer}));
+const myLogger = (store) => (next) => (action) => {
+  console.log("Log action", action);
+  next(action)
+}
+const store = createStore(combineReducers({ employeeReducer, userReducer }), {}, applyMiddleware(myLogger));
 
 store.subscribe(() => {
-  console.log("Update store:", store.getState());
+  // console.log("Update store:", store.getState());
 })
 store.dispatch({
   type: "ADD",
